@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Company;
+use App\Employe;
 
 class HomeController extends Controller{
     public function __construct(){
@@ -10,6 +12,9 @@ class HomeController extends Controller{
     }
 
     public function index(){
-        return view('dashboard.index');
+        $company = Company::count();
+        $employe = Employe::count();
+
+        return view('dashboard.index',compact('company','employe'));
     }
 }

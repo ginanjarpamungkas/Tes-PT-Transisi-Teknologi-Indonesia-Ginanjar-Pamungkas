@@ -11,8 +11,23 @@
   <link href="{{asset('dashboard/css/sb-admin-2.min.css')}}" rel="stylesheet">
   <!-- Custom styles for this page -->
   <link href="{{asset('dashboard/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
+  <style>
+    .alert {position:fixed;right:2%;top:10%;z-index:1000}
+  </style>
 </head>
 <body id="page-top">
+  @if (session('success'))
+    <div class="alert alert-success">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <strong>Berhasil!</strong> {{session('success') }}
+    </div>
+  @endif
+  @if (session('danger'))
+    <div class="alert alert-danger">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <strong>Danger!</strong> {{session('danger') }}
+    </div>
+  @endif
   <!-- Page Wrapper -->
   <div id="wrapper">
     <!-- Sidebar -->
@@ -91,7 +106,7 @@
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ auth()->user()->name}}</span>
-                <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                <i class="fa fa-laugh-wink"></i>
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -128,6 +143,7 @@
   <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
   </a>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <!-- Bootstrap core JavaScript-->
   <script src="{{asset('dashboard/vendor/jquery/jquery.min.js')}}"></script>
   <script src="{{asset('dashboard/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
@@ -140,5 +156,28 @@
   <script src="{{asset('dashboard/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
   <!-- Page level custom scripts -->
   <script src="{{asset('dashboard/js/demo/datatables-demo.js')}}"></script>
+  <script>$(document).ready(function() {$('.alert').fadeOut(10000);});</script>
+<script>
+  jQuery(document).ready(function($){
+      $('#delete').on('click',function(){
+          var getLink = $(this).attr('href');
+          swal({
+              title: "Kamu Yakin?",
+              text: "Setelah dihapus, data tidak bisa dikembalikan!",
+              icon: "warning",
+              buttons: true,
+              dangerMode: true,
+              })
+              .then((value) => {
+                  if (value) {
+                      window.location.href = getLink;
+                  }else{
+                      return false;
+                  }
+              });
+          return false;
+      });
+  });
+</script>
 </body>
 </html>
