@@ -32,7 +32,7 @@
             <td>
                 <div class="btn-group">
                     <a href="{{route('company.edit',$item->id)}}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
-                    <a href="{{route('company.delete',$item->id)}}" class="btn btn-sm btn-danger" id="delete"><i class="fa fa-trash"></i></a>
+                    <a href="{{route('company.delete',$item->id)}}" class="btn btn-sm btn-danger" onclick="Delete(this)"><i class="fa fa-trash"></i></a>
                 </div>
             </td>
         </tr>

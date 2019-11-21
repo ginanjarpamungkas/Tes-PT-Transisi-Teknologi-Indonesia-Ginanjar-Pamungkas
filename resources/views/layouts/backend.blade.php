@@ -158,26 +158,24 @@
   <script src="{{asset('dashboard/js/demo/datatables-demo.js')}}"></script>
   <script>$(document).ready(function() {$('.alert').fadeOut(10000);});</script>
 <script>
-  jQuery(document).ready(function($){
-      $('#delete').on('click',function(){
-          var getLink = $(this).attr('href');
-          swal({
-              title: "Kamu Yakin?",
-              text: "Setelah dihapus, data tidak bisa dikembalikan!",
-              icon: "warning",
-              buttons: true,
-              dangerMode: true,
-              })
-              .then((value) => {
-                  if (value) {
-                      window.location.href = getLink;
-                  }else{
-                      return false;
-                  }
-              });
-          return false;
-      });
-  });
+  function Delete(e) {
+    event.preventDefault();
+    var getLink = $(e).attr('href');
+    swal({
+        title: "Kamu Yakin?",
+        text: "Setelah dihapus, data tidak bisa dikembalikan!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+        })
+        .then((value) => {
+            if (value) {
+                window.location.href = getLink;
+            }else{
+                return false;
+            }
+        });
+  }
 </script>
 </body>
 </html>
