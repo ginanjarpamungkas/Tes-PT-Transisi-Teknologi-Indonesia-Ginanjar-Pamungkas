@@ -33,13 +33,15 @@
         @endif
     </div>
     <div class="form-group">
-        <label for="logo">logo</label>
+        <label for="logo">Logo <small>(kosongkan apabila tidak akan diganti)</small></label>
         <input type="file" name="logo" class="form-control form-control-user {{ $errors->has('logo') ? ' is-invalid' : '' }}" id="exampleInputEmail" placeholder="Logo" value="{{$company->logo}}">
         @if ($errors->has('logo'))
             <span class="invalid-feedback" role="alert">
                 <strong style="color:red">{{ $errors->first('logo') }}</strong>
             </span>
         @endif
+        <p>Logo Saat Ini</p>
+        <img src="{{url('/')}}/storage/app/company/{{$company->logo}}" alt="" width="100" height="100">
     </div>
     <hr>
     <button type="submit" class="btn btn-primary btn-user btn-block">Save</button>

@@ -32,7 +32,7 @@ class CompanyController extends Controller{
             'logo.max'          => 'Ukuran Logo Maksimal 2Mb!',
             'logo.dimensions'   => 'Dimensi Logo Minimal 100x100 pixels!'
         ]);
-        // dd($request->all());
+        
         $logo = str_slug($request->name, '-');
                 
         $company = Company::create([
@@ -69,24 +69,39 @@ class CompanyController extends Controller{
             'name'      =>  'required',
             'email'     =>  'required',
             'website'   =>  'required',
-            // 'logo'      =>  'required||mimes:png|max:2048|dimensions:min_width=100,min_height=100',
         ],[
             'name.required'     => 'Nama Perusahaan Wajib Diisi!',
             'email.required'    => 'Alamat Email Wajib Diisi!',
-            'website.required'  => 'Website Wajib Diisi!',
-            'logo.required'     => 'Logo Wajib Diisi!',
-            'logo.mimes'        => 'Format Logo Harus PNG',
-            'logo.max'          => 'Ukuran Logo Maksimal 2Mb!',
-            // 'logo.dimensions'   => 'Dimensi Logo Minimal 100x100 pixels!'
+            'website.required'  => 'Website Wajib Diisi!'
         ]);
-
+        
         $company = Company::find($id);
-
+        if ($request->logo != null) {
+            $this->validate($request,[
+                'logo'      =>  'required||mimes:png|max:2048|dimensions:min_width=100,min_height=100',
+            ],[
+                'logo.required'     => 'Logo Wajib Diisi!',
+                'logo.mimes'        => 'Format Logo Harus PNG',
+                'logo.max'          => 'Ukuran Logo Maksimal 2Mb!',
+                'logo.dimensions'   => 'Dimensi Logo Minimal 100x100 pixels!'
+            ]);
+            $logo = str_slug($request->name, '-');
+            $logoSave = 'logo-'.$logo.'.png';
+            //beri nama file
+            $logoName = 'logo-'.$logo.'.'.
+            //ambil file sesuai aslinya
+            $request->file('logo')->getClientOriginalExtension();
+            //masukan file kefolder
+            $request->file('logo')->move(
+                base_path() . '/public/storage/app/company', $logoName
+            );
+        }
+        
         $company->update([
             'name'      =>  $request->name,
             'email'     =>  $request->email,
             'website'   =>  $request->website,
-            // 'logo'      =>  'logo-'.$logo.'.png',
+            'logo'      =>  ($request->logo != null) ? $logoSave : $company->logo ,
         ]);
         
         return back()->with('success','Data berhasil dirubah!');
