@@ -78,7 +78,7 @@ class CompanyController extends Controller{
         $company = Company::find($id);
         if ($request->logo != null) {
             $this->validate($request,[
-                'logo'      =>  'required||mimes:png|max:2048|dimensions:min_width=100,min_height=100',
+                'logo'      =>  'required||mimes:png|max:2000|dimensions:min_width=100,min_height=100',
             ],[
                 'logo.required'     => 'Logo Wajib Diisi!',
                 'logo.mimes'        => 'Format Logo Harus PNG',
